@@ -14,8 +14,6 @@ async function seedDatabase(): Promise<void> {
   }
   if (defaultId) return;
 
-  // We seed via direct DB inserts here to avoid expanding storage interface
-  // beyond what's needed for the portfolio app.
   const { db } = await import("./db");
   const {
     profiles,
@@ -28,15 +26,15 @@ async function seedDatabase(): Promise<void> {
   const [profile] = await db
     .insert(profiles)
     .values({
-      name: "Anas",
+      name: "Muhammad Anas Naeem",
       title: "iOS & Flutter Developer",
-      tagline: "Building fast, delightful mobile experiences with clean architecture and thoughtful UI.",
+      tagline: "Building high-performance, user-centric mobile applications with a focus on clean architecture and delightful UI.",
       about:
-        "Hi, I'm Anas — an iOS & Flutter Developer who enjoys shipping polished apps and collaborating with product teams. I focus on performance, clean code, and pixel-perfect UI.\n\nI’ve worked on mobile products end-to-end: requirements, architecture, implementation, testing, and release. I’m comfortable integrating REST APIs, working with async flows, and building reusable UI systems.",
-      location: "",
-      email: "anas@example.com",
-      githubUrl: "https://github.com/your-handle",
-      linkedinUrl: "https://www.linkedin.com/in/your-handle",
+        "Passionate and results-driven Mobile Application Developer with a specialized focus on iOS and Flutter. I thrive on creating seamless, high-quality mobile experiences that combine robust technical foundations with intuitive user interfaces.\n\nMy expertise spans the entire mobile development lifecycle, from conceptualizing architecture to implementing complex business logic and shipping to the App Store. I am deeply committed to clean code, reactive programming patterns, and staying at the forefront of mobile technology trends.",
+      location: "Lahore, Pakistan",
+      email: "anasnaeem@example.com",
+      githubUrl: "https://github.com/muhammad-anas-naeem",
+      linkedinUrl: "https://www.linkedin.com/in/muhammad-anas-naeem/",
       websiteUrl: "",
     })
     .returning();
@@ -48,15 +46,15 @@ async function seedDatabase(): Promise<void> {
       profileId,
       name: "Swift",
       category: "iOS",
-      level: 90,
+      level: 95,
       icon: "Apple",
       order: 1,
     },
     {
       profileId,
-      name: "iOS Development",
+      name: "SwiftUI",
       category: "iOS",
-      level: 88,
+      level: 90,
       icon: "Smartphone",
       order: 2,
     },
@@ -64,7 +62,7 @@ async function seedDatabase(): Promise<void> {
       profileId,
       name: "Dart",
       category: "Flutter",
-      level: 85,
+      level: 92,
       icon: "Code",
       order: 3,
     },
@@ -72,65 +70,75 @@ async function seedDatabase(): Promise<void> {
       profileId,
       name: "Flutter",
       category: "Flutter",
-      level: 87,
+      level: 94,
       icon: "Layers",
       order: 4,
     },
     {
       profileId,
-      name: "UI/UX",
-      category: "Design",
-      level: 75,
-      icon: "Palette",
+      name: "Combine / RxSwift",
+      category: "Reactive",
+      level: 85,
+      icon: "Zap",
       order: 5,
     },
     {
       profileId,
-      name: "REST APIs",
-      category: "Backend",
+      name: "UI/UX Design",
+      category: "Design",
       level: 80,
-      icon: "Globe",
+      icon: "Palette",
       order: 6,
+    },
+    {
+      profileId,
+      name: "Core Data / Realm",
+      category: "Database",
+      level: 88,
+      icon: "Database",
+      order: 7,
+    },
+    {
+      profileId,
+      name: "Firebase",
+      category: "Backend",
+      level: 90,
+      icon: "Flame",
+      order: 8,
     },
   ]);
 
   await db.insert(projects).values([
     {
       profileId,
-      title: "Habit Tracker Mobile App",
-      summary:
-        "A clean, offline-first habit tracker with reminders, streaks, and analytics.",
-      details:
-        "Built reusable UI components, implemented local persistence, and added charts for progress analytics.",
-      techStack: ["Flutter", "Dart", "SQLite", "REST"],
-      liveUrl: "https://example.com/demo",
-      repoUrl: "https://github.com/your-handle/habit-tracker",
+      title: "E-Commerce App (SwiftUI)",
+      summary: "A high-performance iOS shopping experience with real-time sync and custom animations.",
+      details: "Leveraged SwiftUI and Combine for a reactive UI, implemented a robust caching layer for offline support, and integrated Apple Pay.",
+      techStack: ["SwiftUI", "Combine", "MVVM", "Core Data"],
+      liveUrl: "",
+      repoUrl: "",
       imageUrl: "",
       order: 1,
     },
     {
       profileId,
-      title: "Food Delivery UI Kit",
-      summary:
-        "A modern iOS UI kit showcasing responsive layouts, animations, and accessibility.",
-      details:
-        "Focused on smooth transitions, component-driven UI, and accessibility best practices.",
-      techStack: ["Swift", "UIKit", "Auto Layout"],
+      title: "Fitness & Workout Tracker (Flutter)",
+      summary: "Cross-platform app for tracking workouts, meals, and health metrics with interactive charts.",
+      details: "Used BLoC pattern for state management, integrated Google Fit and Apple HealthKit APIs, and built custom visualization tools.",
+      techStack: ["Flutter", "Dart", "BLoC", "Firebase"],
       liveUrl: "",
-      repoUrl: "https://github.com/your-handle/food-delivery-ui",
+      repoUrl: "",
       imageUrl: "",
       order: 2,
     },
     {
       profileId,
-      title: "API-Driven Weather App",
-      summary:
-        "A lightweight weather app with caching, location support, and clean architecture.",
-      details:
-        "Implemented async networking, caching, error handling, and a clean MVVM structure.",
-      techStack: ["Swift", "SwiftUI", "APIs"],
+      title: "Real-time Chat Platform",
+      summary: "End-to-end encrypted messaging app with file sharing and push notifications.",
+      details: "Implemented WebSockets for real-time messaging, optimized media uploads, and integrated Firebase Cloud Messaging.",
+      techStack: ["Swift", "Node.js", "Socket.io", "MongoDB"],
       liveUrl: "",
-      repoUrl: "https://github.com/your-handle/weather-app",
+      repoUrl: "",
       imageUrl: "",
       order: 3,
     },
@@ -139,34 +147,33 @@ async function seedDatabase(): Promise<void> {
   await db.insert(experiences).values([
     {
       profileId,
-      company: "Mobile Studio",
-      role: "iOS & Flutter Developer",
-      location: "",
-      startDate: "2023",
+      company: "Tech Innovations",
+      role: "Senior iOS Developer",
+      location: "Lahore, Pakistan",
+      startDate: "Jan 2023",
       endDate: "Present",
       isCurrent: 1,
-      description:
-        "Developed and maintained mobile apps, collaborated with designers and backend engineers, and shipped features with a focus on performance and UI polish.",
+      description: "Leading the development of high-traffic mobile applications, focusing on architectural scalability and performance optimization.",
       achievements: [
-        "Improved app startup time by optimizing initialization flows.",
-        "Built reusable UI components to speed up feature delivery.",
-        "Integrated REST APIs with robust error handling and caching.",
+        "Reduced app crash rate by 40% through rigorous code reviews and unit testing.",
+        "Architected a modular UI component library used across multiple enterprise projects.",
+        "Mentored junior developers in reactive programming and clean architecture principles.",
       ],
       order: 1,
     },
     {
       profileId,
-      company: "Freelance",
-      role: "Mobile Developer",
-      location: "",
-      startDate: "2021",
-      endDate: "2023",
+      company: "App Solutions Ltd",
+      role: "Mobile App Developer",
+      location: "Lahore, Pakistan",
+      startDate: "Jun 2021",
+      endDate: "Dec 2022",
       isCurrent: 0,
-      description:
-        "Delivered client projects from scope to release, including UI implementation and API integrations.",
+      description: "Worked as a key contributor to various client projects, specializing in cross-platform development with Flutter.",
       achievements: [
-        "Shipped multiple MVPs on tight timelines.",
-        "Worked directly with stakeholders to iterate quickly.",
+        "Successfully delivered 5+ production-grade apps on both iOS and Android platforms.",
+        "Integrated complex third-party APIs for payment gateways and social authentication.",
+        "Optimized app bundles, reducing overall download size by 25%.",
       ],
       order: 2,
     },
@@ -175,23 +182,13 @@ async function seedDatabase(): Promise<void> {
   await db.insert(educations).values([
     {
       profileId,
-      school: "University Name",
-      degree: "Bachelor's Degree",
-      field: "Computer Science",
-      startYear: "2018",
-      endYear: "2022",
-      description: "Relevant coursework: mobile development, software engineering, databases.",
+      school: "University of Central Punjab",
+      degree: "Bachelor of Science in Computer Science",
+      field: "Software Engineering",
+      startYear: "2017",
+      endYear: "2021",
+      description: "Focused on mobile computing, software design patterns, and human-computer interaction.",
       order: 1,
-    },
-    {
-      profileId,
-      school: "Certification Provider",
-      degree: "Flutter Development Certificate",
-      field: "Mobile Development",
-      startYear: "2022",
-      endYear: "2022",
-      description: "Practical training in Flutter, state management, and app deployment.",
-      order: 2,
     },
   ]);
 }

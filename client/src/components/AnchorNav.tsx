@@ -53,6 +53,8 @@ function scrollToId(id: string) {
   el.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+import { ThemeToggle } from "./ThemeToggle";
+
 export function AnchorNav({
   name,
   title,
@@ -81,7 +83,7 @@ export function AnchorNav({
               scrollToId("home");
             }}
           >
-            <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-2xl border border-border/80 bg-card shadow-[var(--shadow-xs)]">
+            <span className="relative grid h-9 w-9 place-items-center overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
               <span className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/15 to-transparent" />
               <Sparkles className="relative h-4.5 w-4.5 text-primary" />
             </span>
@@ -109,7 +111,7 @@ export function AnchorNav({
                   {isActive ? (
                     <motion.span
                       layoutId="nav-pill"
-                      className="absolute inset-0 -z-10 rounded-full bg-gradient-to-b from-muted to-muted/60 shadow-[var(--shadow-2xs)]"
+                      className="absolute inset-0 -z-10 rounded-full bg-muted shadow-sm"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   ) : null}
@@ -120,6 +122,7 @@ export function AnchorNav({
           </nav>
 
           <div className="flex items-center gap-2">
+            <ThemeToggle />
             <Button
               data-testid="nav-cta"
               onClick={() => scrollToId("contact")}

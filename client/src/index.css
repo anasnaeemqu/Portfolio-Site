@@ -1,22 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500,600,700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* =========================================================
-   Aesthetic direction: clean minimal + tech-inspired
-   Palette: deep blue / slate / bright cyan accents
-   Texture: subtle noise + gradient mesh + glassy surfaces
-   ========================================================= */
-
 :root {
-  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
-  --font-serif: "Fraunces", ui-serif, Georgia, serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
-
-  --background: 215 32% 98%;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Space Grotesk", sans-serif;
+  
+  --background: 222 47% 98%;
   --foreground: 222 47% 11%;
 
   --card: 0 0% 100%;
@@ -46,243 +38,82 @@
   --destructive: 0 84% 60%;
   --destructive-foreground: 210 40% 98%;
 
-  --chart-1: 221 83% 53%;
-  --chart-2: 192 95% 45%;
-  --chart-3: 244 75% 57%;
-  --chart-4: 34 95% 55%;
-  --chart-5: 156 73% 43%;
-
   --radius: 0.75rem;
 
-  /* Soft, modern shadow system */
-  --shadow-2xs: 0px 2px 10px hsl(222 47% 11% / 0.03);
-  --shadow-xs: 0px 6px 18px hsl(222 47% 11% / 0.06);
-  --shadow-sm: 0px 10px 30px hsl(222 47% 11% / 0.08);
-  --shadow-md: 0px 18px 46px hsl(222 47% 11% / 0.12);
-  --shadow-lg: 0px 24px 80px hsl(222 47% 11% / 0.14);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
-  /* Elevate overlays used by existing utilities in template */
-  --elevate-1: rgba(0, 0, 0, 0.035);
-  --elevate-2: rgba(0, 0, 0, 0.075);
-
-  --button-outline: rgba(0, 0, 0, 0.10);
-  --badge-outline: rgba(0, 0, 0, 0.05);
-
-  --opaque-button-border-intensity: -8;
-
-  --sidebar: 215 32% 97%;
-  --sidebar-foreground: 222 47% 11%;
-  --sidebar-border: 220 22% 90%;
-  --sidebar-primary: 221 83% 53%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 192 95% 45%;
-  --sidebar-accent-foreground: 210 40% 98%;
-  --sidebar-ring: 203 92% 52%;
-
-  --tracking-normal: 0em;
-  --spacing: 0.25rem;
-
-  /* Computed borders (template expects these) */
-  --sidebar-primary-border: hsl(var(--sidebar-primary));
-  --sidebar-primary-border: hsl(from hsl(var(--sidebar-primary)) h s calc(l + var(--opaque-button-border-intensity)) /
-        alpha);
-
-  --sidebar-accent-border: hsl(var(--sidebar-accent));
-  --sidebar-accent-border: hsl(from hsl(var(--sidebar-accent)) h s calc(l + var(--opaque-button-border-intensity)) /
-        alpha);
-
-  --primary-border: hsl(var(--primary));
-  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-
-  --secondary-border: hsl(var(--secondary));
-  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-
-  --muted-border: hsl(var(--muted));
-  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-
-  --accent-border: hsl(var(--accent));
-  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
-
-  --destructive-border: hsl(var(--destructive));
-  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --mesh-color: 203 92% 52%;
 }
 
 .dark {
-  --background: 222 47% 7%;
+  --background: 222 47% 4%;
   --foreground: 210 40% 98%;
 
-  --card: 222 47% 9%;
+  --card: 222 47% 6%;
   --card-foreground: 210 40% 98%;
-  --card-border: 217 24% 16%;
+  --card-border: 217 24% 12%;
 
-  --popover: 222 47% 9%;
-  --popover-foreground: 210 40% 98%;
-  --popover-border: 217 24% 16%;
-
-  --border: 217 24% 16%;
-  --input: 217 24% 22%;
+  --border: 217 24% 12%;
+  --input: 217 24% 18%;
   --ring: 192 95% 45%;
 
   --primary: 203 92% 52%;
   --primary-foreground: 222 47% 11%;
 
-  --secondary: 217 24% 14%;
+  --secondary: 217 24% 10%;
   --secondary-foreground: 210 40% 98%;
 
-  --muted: 217 24% 14%;
+  --muted: 217 24% 10%;
   --muted-foreground: 215 16% 68%;
-
-  --accent: 192 95% 45%;
-  --accent-foreground: 222 47% 11%;
-
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
-
-  --elevate-1: rgba(255, 255, 255, 0.04);
-  --elevate-2: rgba(255, 255, 255, 0.09);
-
-  --button-outline: rgba(255, 255, 255, 0.10);
-  --badge-outline: rgba(255, 255, 255, 0.06);
-
-  --opaque-button-border-intensity: 9;
-
-  --sidebar: 222 47% 8%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 217 24% 16%;
-  --sidebar-primary: 203 92% 52%;
-  --sidebar-primary-foreground: 222 47% 11%;
-  --sidebar-accent: 192 95% 45%;
-  --sidebar-accent-foreground: 222 47% 11%;
-  --sidebar-ring: 192 95% 45%;
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-
   html {
     scroll-behavior: smooth;
   }
-
   body {
-    @apply bg-background text-foreground antialiased;
-    font-family: var(--font-sans);
-    text-rendering: geometricPrecision;
+    @apply bg-background text-foreground antialiased font-sans;
   }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: var(--font-serif);
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
     @apply font-bold tracking-tight;
   }
 }
 
-/* =========================================================
-   Premium background: mesh gradient + noise overlay
-   ========================================================= */
-
 @layer utilities {
   .mesh-bg {
-    background:
-      radial-gradient(1200px 800px at 15% 15%, hsl(var(--primary) / 0.20), transparent 60%),
-      radial-gradient(900px 700px at 85% 20%, hsl(var(--accent) / 0.22), transparent 55%),
-      radial-gradient(900px 700px at 50% 90%, hsl(244 75% 57% / 0.14), transparent 55%),
-      linear-gradient(180deg, hsl(var(--background)), hsl(var(--background)));
+    background-color: hsl(var(--background));
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(var(--mesh-color) / 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(var(--mesh-color) / 0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(var(--mesh-color) / 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(var(--mesh-color) / 0.1) 0px, transparent 50%);
   }
 
-  .noise-overlay {
-    position: relative;
-    isolation: isolate;
-  }
-
-  .noise-overlay::before {
+  .noise-overlay::after {
     content: "";
-    position: absolute;
-    inset: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.03;
+    z-index: 9999;
     pointer-events: none;
-    z-index: 0;
-    opacity: 0.08;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-    background-size: 240px 240px;
-  }
-
-  .noise-overlay > * {
-    position: relative;
-    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
   .glass {
-    background: linear-gradient(180deg, hsl(var(--card) / 0.80), hsl(var(--card) / 0.60));
-    border: 1px solid hsl(var(--border) / 0.7);
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(10px);
+    @apply bg-card/70 backdrop-blur-xl border border-border/50 shadow-sm;
   }
 
-  .shadow-premium {
-    box-shadow: var(--shadow-md);
-  }
-
-  .ring-premium {
-    box-shadow:
-      0 0 0 1px hsl(var(--border) / 0.8),
-      0 0 0 6px hsl(var(--primary) / 0.12);
-  }
-
-  .text-gradient {
-    background: linear-gradient(90deg, hsl(var(--foreground)), hsl(var(--primary)));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .text-gradient-accent {
-    background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  /* tasteful entrance animation for sections */
-  @keyframes float-in {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-      filter: blur(6px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-      filter: blur(0);
-    }
-  }
-
-  .animate-float-in {
-    animation: float-in 600ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  }
-
-  /* focus-visible upgrade */
   .focus-premium:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px hsl(var(--background)),
-      0 0 0 6px hsl(var(--ring) / 0.35);
-  }
-
-  /* Hide ugly search cancel button in Chrome until we can style it properly */
-  input[type="search"]::-webkit-search-cancel-button {
-    @apply hidden;
-  }
-
-  /* Placeholder styling for contentEditable div */
-  [contenteditable][data-placeholder]:empty::before {
-    content: attr(data-placeholder);
-    color: hsl(var(--muted-foreground));
-    pointer-events: none;
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
   }
 }

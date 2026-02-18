@@ -7,19 +7,18 @@ import { Timeline } from "@/components/Timeline";
 import { SkillMeter } from "@/components/SkillMeter";
 import { ProjectCard } from "@/components/ProjectCard";
 import { Footer } from "@/components/Footer";
-import { Seo } from "@/components/Seo";
+import Seo from "@/components/Seo";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, Mail, Github, Linkedin, ExternalLink } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertContactMessageSchema } from "@shared/schema";
+import { insertContactMessageSchema, type Skill, type Project, type Experience, type Education, type Profile } from "@shared/schema";
 import { Form, FormControl,FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Home() {
   const { toast } = useToast();
@@ -40,7 +39,7 @@ export default function Home() {
 
   const onSubmit = async (data: any) => {
     try {
-      await apiRequest("POST", api.contact.create.path, { ...data, profileId: portfolio?.profile.id || 1 });
+      await apiRequest("POST", api.contact.create.path, { ...data, profileId: (portfolio as any)?.profile.id || 1 });
       toast({ title: "Message sent!", description: "Thanks for reaching out. I'll get back to you soon." });
       form.reset();
     } catch (error) {
@@ -56,7 +55,13 @@ export default function Home() {
     );
   }
 
-  const { profile, skills, projects, experiences, educations } = portfolio;
+  const { profile, skills, projects, experiences, educations } = portfolio as {
+    profile: Profile;
+    skills: Skill[];
+    projects: Project[];
+    experiences: Experience[];
+    educations: Education[];
+  };
 
   return (
     <PortfolioShell>
@@ -107,7 +112,7 @@ export default function Home() {
         <Section id="about" eyebrow="Introduction" title="About Me" className="py-24">
           <div className="grid gap-12 lg:grid-cols-[2fr_1fr]">
             <div className="prose prose-sm sm:prose-base dark:prose-invert max-w-none text-muted-foreground">
-              {profile.about.split('\n\n').map((p, i) => (
+              {profile.about.split('\n\n').map((p: string, i: number) => (
                 <p key={i} className="mb-4 last:mb-0 leading-relaxed">{p}</p>
               ))}
             </div>
@@ -145,12 +150,12 @@ export default function Home() {
         {/* Skills Section */}
         <Section id="skills" eyebrow="Expertise" title="Technical Skills" className="py-24 bg-muted/30">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {Array.from(new Set(skills.map(s => s.category))).map(cat => (
+            {Array.from(new Set(skills.map((s: Skill) => s.category))).map((cat: any) => (
               <div key={cat} className="space-y-4">
                 <h3 className="text-lg font-bold px-2">{cat}</h3>
                 <div className="grid gap-4">
-                  {skills.filter(s => s.category === cat).map(skill => (
-                    <SkillMeter key={skill.id} name={skill.name} level={skill.level} icon={skill.icon} />
+                  {skills.filter((s: Skill) => s.category === cat).map((skill: Skill) => (
+                    <SkillMeter key={skill.id} skill={skill} />
                   ))}
                 </div>
               </div>
@@ -175,7 +180,7 @@ export default function Home() {
                 Education
               </h3>
               <div className="grid gap-6">
-                {educations.map((edu) => (
+                {educations.map((edu: Education) => (
                   <div key={edu.id} className="relative rounded-3xl border border-border/70 bg-card/70 p-6 shadow-sm transition-all hover:bg-card">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                       <div>
@@ -198,8 +203,8 @@ export default function Home() {
         {/* Projects Section */}
         <Section id="projects" eyebrow="Portfolio" title="Featured Projects" className="py-24 bg-muted/30">
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map(project => (
-              <ProjectCard key={project.id} project={project} />
+            {projects.map((project: Project) => (
+              <ProjectCard key={project.id} project={project} onOpen={() => {}} />
             ))}
           </div>
         </Section>

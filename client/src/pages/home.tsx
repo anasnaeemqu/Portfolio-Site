@@ -39,6 +39,7 @@ export default function Home() {
 
   const onSubmit = async (data: any) => {
     try {
+      
       await apiRequest("POST", api.contact.create.path, { ...data, profileId: (portfolio as any)?.profile.id || 1 });
       toast({ title: "Message sent!", description: "Thanks for reaching out. I'll get back to you soon." });
       form.reset();

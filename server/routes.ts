@@ -213,6 +213,8 @@ async function seedDatabase(): Promise<void> {
   ]);
 }
 
+import { sendContactEmail } from "./mailer";
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express,
@@ -288,6 +290,20 @@ export async function registerRoutes(
     try {
       const input = api.contact.create.input.parse(req.body);
       const created = await storage.createContactMessage(input);
+      
+      // Send email notification
+      try {
+        await sendContactEmail({
+          name: input.name,
+          email: input.email,
+          subject: input.subject,
+          message: input.message,
+        });
+      } catch (mailErr) {
+        console.error("Failed to send contact email:", mailErr);
+        // We still return 201 because the message was saved to the DB
+      }
+
       return res.status(201).json(created);
     } catch (err) {
       if (err instanceof z.ZodError) {

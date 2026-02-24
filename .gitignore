@@ -13,6 +13,7 @@ yarn-error.log*
 .replit
 .local
 .local/
+replit.md
 
 # Logs
 logs

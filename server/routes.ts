@@ -367,3 +367,4 @@ export async function registerRoutes(
 
   return httpServer;
 }
+}

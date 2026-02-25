@@ -1,218 +1,3 @@
-import type { Express } from "express";
-import type { Server } from "http";
-import { z } from "zod";
-import { storage } from "./storage";
-import { api } from "@shared/routes";
-
-async function seedDatabase(): Promise<void> {
-  // Seed only if there is no profile yet
-  let defaultId: number | undefined;
-  try {
-    defaultId = await (storage as any).getDefaultProfileId();
-  } catch {
-    defaultId = undefined;
-  }
-  if (defaultId) return;
-
-  const { db } = await import("./db");
-  const {
-    profiles,
-    skills,
-    projects,
-    experiences,
-    educations,
-  } = await import("@shared/schema");
-
-  const [profile] = await db
-    .insert(profiles)
-    .values({
-      name: "Muhammad Anas Naeem",
-      title: "Software Engineer | iOS & Web Developer",
-      tagline: "Building high-performance mobile apps and responsive websites with a focus on clean architecture and impactful solutions.",
-      about:
-        "Hi, I’m Muhammad Anas – a passionate and ambitious Software Developer from Pakistan, specializing in iOS Development and Web Development. I’m currently building my career across both mobile applications and responsive websites, gaining hands-on experience in multiple technologies.\n\nI have advanced my mobile development expertise by delivering high-quality applications across iOS, Flutter, and Kotlin. Initially focused on native iOS development, I have expanded my expertise to include Android, enabling seamless cross-platform feature parity and consistent user experiences.\n\nCareer Goal: To grow into a strong iOS Developer with full-stack capabilities, able to contribute to both frontend and backend projects, while delivering high-quality, impactful software solutions.",
-      location: "Karachi Division, Sindh, Pakistan",
-      email: "anasnaeem914@gmail.com",
-      githubUrl: "https://github.com/anasnaeemqu",
-      linkedinUrl: "https://www.linkedin.com/in/muhammad-anas-naeem",
-      websiteUrl: "",
-    })
-    .returning();
-
-  const profileId = profile.id;
-
-  await db.insert(skills).values([
-    { profileId, name: "Swift", category: "iOS", level: 90, icon: "Apple", order: 1 },
-    { profileId, name: "SwiftUI", category: "iOS", level: 85, icon: "Smartphone", order: 2 },
-    { profileId, name: "UIKit", category: "iOS", level: 85, icon: "Layers", order: 3 },
-    { profileId, name: "CoreML", category: "iOS", level: 80, icon: "Brain", order: 4 },
-    { profileId, name: "AVFoundation", category: "iOS", level: 80, icon: "Camera", order: 5 },
-    { profileId, name: "Flutter", category: "Mobile", level: 85, icon: "Zap", order: 6 },
-    { profileId, name: "Kotlin", category: "Mobile", level: 80, icon: "Smartphone", order: 7 },
-    { profileId, name: "WordPress", category: "Web", level: 90, icon: "Globe", order: 8 },
-    { profileId, name: "HTML/CSS", category: "Web", level: 95, icon: "Layout", order: 9 },
-    { profileId, name: "JavaScript", category: "Web", level: 85, icon: "Code", order: 10 },
-  ]);
-
-  await db.insert(projects).values([
-    {
-      profileId,
-      title: "iBaax iOS Project",
-      summary: "A high-quality iOS application focused on property and real estate.",
-      details: "Delivered native iOS experience with seamless API integrations and polished UI.",
-      techStack: ["Swift", "UIKit", "MVVM", "REST APIs"],
-      liveUrl: "",
-      repoUrl: "https://github.com/anasnaeemqu",
-      imageUrl: "",
-      order: 1,
-    },
-    {
-      profileId,
-      title: "Fitness App",
-      summary: "Mobile fitness tracking solution for monitoring workouts and health.",
-      details: "Implemented complex tracking logic and interactive user interfaces.",
-      techStack: ["Swift", "iOS", "UI/UX"],
-      liveUrl: "",
-      repoUrl: "https://github.com/anasnaeemqu",
-      imageUrl: "",
-      order: 2,
-    },
-    {
-      profileId,
-      title: "Trimlow (Flutter)",
-      summary: "Cross-platform mobile application for service management.",
-      details: "Built with Flutter to ensure consistent performance across iOS and Android.",
-      techStack: ["Flutter", "Dart", "Firebase"],
-      liveUrl: "",
-      repoUrl: "https://github.com/anasnaeemqu",
-      imageUrl: "",
-      order: 3,
-    },
-    {
-      profileId,
-      title: "Depressed Amogoi Discord Bot",
-      summary: "A feature-rich Discord bot with admin tools and utility features.",
-      details: "Includes reminders, memes, jokes, homework tracking, and a trigonometry solver.",
-      techStack: ["Python", "Discord.py"],
-      liveUrl: "",
-      repoUrl: "https://github.com/muhammadanas0716/Depressed-Amogoi",
-      imageUrl: "",
-      order: 4,
-    },
-  ]);
-
-  await db.insert(experiences).values([
-    {
-      profileId,
-      company: "Meezotech",
-      role: "Mobile Application Developer",
-      location: "Karachi Division, Sindh, Pakistan",
-      startDate: "Jan 2026",
-      endDate: "Present",
-      isCurrent: 1,
-      description: "Delivering high-quality applications across iOS, Flutter, and Kotlin. Successfully translating product vision across platforms.",
-      achievements: [
-        "Advanced mobile development expertise by delivering iBaax, Fitness app, and Trimlow.",
-        "Took ownership of iBaax on Kotlin, achieving full platform parity.",
-        "Driving impactful solutions with confidence as a multi-platform mobile engineer.",
-      ],
-      order: 1,
-    },
-    {
-      profileId,
-      company: "SwiftVision Ai",
-      role: "iOS App Developer",
-      location: "Karachi, Sindh, Pakistan",
-      startDate: "Sept 2025",
-      endDate: "Jan 2026",
-      isCurrent: 0,
-      description: "Focused on building intelligent iOS applications integrating on-device AI using Core ML and Vision frameworks.",
-      achievements: [
-        "Progressed from intern to full-time iOS Developer.",
-        "Successfully deployed Core ML–powered apps with real-time camera AI processing.",
-        "Built efficient pipelines for model integration, training, and testing on Apple Silicon Macs.",
-      ],
-      order: 2,
-    },
-    {
-      profileId,
-      company: "KGT Global",
-      role: "Senior Frontend Web Developer",
-      location: "Karachi, Sindh, Pakistan",
-      startDate: "Sept 2025",
-      endDate: "Sept 2025",
-      isCurrent: 0,
-      description: "Promoted to Senior Web Developer after demonstrating strong technical leadership.",
-      achievements: [
-        "Led frontend development initiatives using WordPress and Divi.",
-      ],
-      order: 3,
-    },
-    {
-      profileId,
-      company: "KGT Global",
-      role: "Frontend Web Developer",
-      location: "Karachi, Sindh, Pakistan",
-      startDate: "June 2025",
-      endDate: "Aug 2025",
-      isCurrent: 0,
-      description: "Building responsive websites using WordPress and Divi Theme.",
-      achievements: [
-        "Designed and developed SEO-friendly and high-performance websites.",
-      ],
-      order: 4,
-    },
-    {
-      profileId,
-      company: "Abnotix Solutions",
-      role: "Software Engineer",
-      location: "Karachi, Sindh, Pakistan",
-      startDate: "June 2022",
-      endDate: "Aug 2023",
-      isCurrent: 0,
-      description: "Contributed as a Web Developer and Sales Executive, bridging client needs with technical solutions.",
-      achievements: [
-        "Built and customized multiple pages for various client websites using WordPress and Divi.",
-        "Delivered product demos and presentations to convert leads into customers.",
-      ],
-      order: 5,
-    },
-  ]);
-
-  await db.insert(educations).values([
-    {
-      profileId,
-      school: "Karachi Institute of Economics & Technology (KIET)",
-      degree: "Bachelor of Engineering - BE",
-      field: "Computer Software Engineering",
-      startYear: "2021",
-      endYear: "2025",
-      description: "Comprehensive software engineering curriculum focusing on mobile and web applications.",
-      order: 1,
-    },
-    {
-      profileId,
-      school: "Government Dehli College",
-      degree: "Intermediate",
-      field: "Pre-Engineering",
-      startYear: "2018",
-      endYear: "2020",
-      description: "",
-      order: 2,
-    },
-    {
-      profileId,
-      school: "Metropolitan Academy",
-      degree: "Master",
-      field: "Computer Science",
-      startYear: "2006",
-      endYear: "2018",
-      description: "",
-      order: 3,
-    },
-  ]);
-}
-
 import { sendContactEmail } from "./mailer";
 
 export async function registerRoutes(
@@ -222,8 +7,15 @@ export async function registerRoutes(
   await seedDatabase();
 
   app.get(api.portfolio.get.path, async (req, res) => {
-    const input = api.portfolio.get.input?.safeParse(req.query);
-    const profileId = input?.success ? input.data?.profileId : undefined;
+    let profileId: number | undefined;
+
+    if (api.portfolio.get.input) {
+      const parsed = api.portfolio.get.input.safeParse(req.query);
+      if (parsed.success) {
+        profileId = parsed.data.profileId;
+      }
+    }
+
     const portfolio = await storage.getPortfolio(profileId);
     res.json(portfolio);
   });
@@ -231,14 +23,17 @@ export async function registerRoutes(
   app.get(api.profile.get.path, async (req, res) => {
     const profileId = Number(req.params.profileId);
     const profile = await storage.getProfile(profileId);
+
     if (!profile) {
       return res.status(404).json({ message: "Profile not found" });
     }
+
     return res.json(profile);
   });
 
   app.patch(api.profile.update.path, async (req, res) => {
     const profileId = Number(req.params.profileId);
+
     try {
       const input = api.profile.update.input.parse(req.body);
       const updated = await storage.updateProfile(profileId, input);
@@ -254,44 +49,76 @@ export async function registerRoutes(
     }
   });
 
+  // SKILLS
   app.get(api.skills.list.path, async (req, res) => {
-    const parsed = api.skills.list.input?.safeParse(req.query);
-    const profileId = parsed?.success ? parsed.data.profileId : undefined;
+    let profileId: number | undefined;
+
+    if (api.skills.list.input) {
+      const parsed = api.skills.list.input.safeParse(req.query);
+      if (parsed.success) {
+        profileId = parsed.data.profileId;
+      }
+    }
+
     const pid = profileId ?? (await (storage as any).getDefaultProfileId());
     const rows = await storage.listSkills(pid);
     res.json(rows);
   });
 
+  // PROJECTS
   app.get(api.projects.list.path, async (req, res) => {
-    const parsed = api.projects.list.input?.safeParse(req.query);
-    const profileId = parsed?.success ? parsed.data.profileId : undefined;
+    let profileId: number | undefined;
+
+    if (api.projects.list.input) {
+      const parsed = api.projects.list.input.safeParse(req.query);
+      if (parsed.success) {
+        profileId = parsed.data.profileId;
+      }
+    }
+
     const pid = profileId ?? (await (storage as any).getDefaultProfileId());
     const rows = await storage.listProjects(pid);
     res.json(rows);
   });
 
+  // EXPERIENCES
   app.get(api.experiences.list.path, async (req, res) => {
-    const parsed = api.experiences.list.input?.safeParse(req.query);
-    const profileId = parsed?.success ? parsed.data.profileId : undefined;
+    let profileId: number | undefined;
+
+    if (api.experiences.list.input) {
+      const parsed = api.experiences.list.input.safeParse(req.query);
+      if (parsed.success) {
+        profileId = parsed.data.profileId;
+      }
+    }
+
     const pid = profileId ?? (await (storage as any).getDefaultProfileId());
     const rows = await storage.listExperiences(pid);
     res.json(rows);
   });
 
+  // EDUCATIONS
   app.get(api.educations.list.path, async (req, res) => {
-    const parsed = api.educations.list.input?.safeParse(req.query);
-    const profileId = parsed?.success ? parsed.data.profileId : undefined;
+    let profileId: number | undefined;
+
+    if (api.educations.list.input) {
+      const parsed = api.educations.list.input.safeParse(req.query);
+      if (parsed.success) {
+        profileId = parsed.data.profileId;
+      }
+    }
+
     const pid = profileId ?? (await (storage as any).getDefaultProfileId());
     const rows = await storage.listEducations(pid);
     res.json(rows);
   });
 
+  // CONTACT
   app.post(api.contact.create.path, async (req, res) => {
     try {
       const input = api.contact.create.input.parse(req.body);
       const created = await storage.createContactMessage(input);
-      
-      // Send email notification
+
       try {
         await sendContactEmail({
           name: input.name,
@@ -301,7 +128,6 @@ export async function registerRoutes(
         });
       } catch (mailErr) {
         console.error("Failed to send contact email:", mailErr);
-        // We still return 201 because the message was saved to the DB
       }
 
       return res.status(201).json(created);

@@ -2,17 +2,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": ".",
-    "module": "ESNext",
+    "module": "CommonJS",
     "moduleResolution": "Node",
     "target": "ES2020",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./client/src/*"],
-      "@shared/*": ["./shared/*"]
-    }
+    "skipLibCheck": true
   },
   "include": ["server"],
   "exclude": ["node_modules", "dist"]

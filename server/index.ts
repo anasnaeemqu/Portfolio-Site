@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes.js";
 import { serveStatic } from "./static.js";
 import { createServer } from "http";
+import { storage } from "./storage.js";
 
 const app = express();
 const httpServer = createServer(app);

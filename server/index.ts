@@ -3,6 +3,7 @@ import { registerRoutes } from "./routes.js";
 import { serveStatic } from "./static.js";
 import { createServer } from "http";
 import { storage } from "./storage.js";
+import { sendContactEmail } from "./mailer.js";
 
 const app = express();
 const httpServer = createServer(app);

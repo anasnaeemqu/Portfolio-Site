@@ -1,14 +1,44 @@
 {
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "types": [
+      "node"
+    ],
+    "jsx": "react-jsx",
     "outDir": "dist",
     "rootDir": ".",
-    "module": "CommonJS",
-    "moduleResolution": "Node",
-    "target": "ES2020",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "paths": {
+      "@shared/*": [
+        "./shared/*"
+      ],
+      "@/*": [
+        "./client/src/*"
+      ],
+      "@assets/*": [
+        "./attached_assets/*"
+      ]
+    }
   },
-  "include": ["server"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "server",
+    "shared",
+    "client/src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

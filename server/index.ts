@@ -1,9 +1,9 @@
 import express, { type Request, Response, NextFunction } from "express";
-import { registerRoutes } from "./routes.js";
-import { serveStatic } from "./static.js";
+import { registerRoutes } from "./routes";
+import { serveStatic } from "./static";
 import { createServer } from "http";
-import { storage } from "./storage.js";
-import { sendContactEmail } from "./mailer.js";
+import { storage } from "./storage";
+import { sendContactEmail } from "./mailer";
 
 const app = express();
 const httpServer = createServer(app);

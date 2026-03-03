@@ -23,7 +23,7 @@ export function serveStatic(app: Express) {
   app.use(express.static(distPath));
 
   // Fall through to index.html for client-side routing
- app.get("*", (_req, res) => {
+ app.get("/.*/", (_req, res) => {
   res.sendFile(path.resolve(distPath, "index.html"));
 });
 }

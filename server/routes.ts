@@ -56,6 +56,41 @@ export async function registerRoutes(
 ): Promise<Server> {
   await seedDatabase();
 
+
+  // ✅ ADD THIS — the missing portfolio route
+  app.get(api.portfolio.get.path, async (req, res) => {
+    try {
+      const profileId = req.query.profileId
+        ? Number(req.query.profileId)
+        : await (storage as any).getDefaultProfileId();
+
+      const [profile, skills, projects, experiences, educations] = await Promise.all([
+        storage.getProfile(profileId),
+        storage.getSkills(profileId),
+        storage.getProjects(profileId),
+        storage.getExperiences(profileId),
+        storage.getEducations(profileId),
+      ]);
+
+      if (!profile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+
+      return res.json({ profile, skills, projects, experiences, educations });
+    } catch (err) {
+      console.error("Portfolio fetch error:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // your existing contact route
+  app.post(api.contact.create.path, async (req, res) => {
+    // ... existing code
+  });
+
+  return httpServer;
+}
+
   app.post(api.contact.create.path, async (req, res) => {
     try {
       const input = api.contact.create.input.parse(req.body);

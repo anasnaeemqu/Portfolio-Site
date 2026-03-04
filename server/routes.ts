@@ -45,30 +45,19 @@ export async function registerRoutes(
   await seedDatabase();
 
   // Portfolio route
-  app.get(api.portfolio.get.path, async (req, res) => {
-    try {
-      const profileId = req.query.profileId
-        ? Number(req.query.profileId)
-        : await (storage as any).getDefaultProfileId();
+app.get(api.portfolio.get.path, async (req, res) => {
+  try {
+    const profileId = req.query.profileId
+      ? Number(req.query.profileId)
+      : undefined;
 
-      const [profile, skills, projects, experiences, educations] = await Promise.all([
-        storage.getProfile(profileId),
-        storage.getSkills(profileId),
-        storage.getProjects(profileId),
-        storage.getExperiences(profileId),
-        storage.getEducations(profileId),
-      ]);
-
-      if (!profile) {
-        return res.status(404).json({ message: "Profile not found" });
-      }
-
-      return res.json({ profile, skills, projects, experiences, educations });
-    } catch (err) {
-      console.error("Portfolio fetch error:", err);
-      return res.status(500).json({ message: "Internal server error" });
-    }
-  });
+    const data = await storage.getPortfolio(profileId);
+    return res.json(data);
+  } catch (err) {
+    console.error("Portfolio fetch error:", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
   // Contact route
   app.post(api.contact.create.path, async (req, res) => {

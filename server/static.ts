@@ -8,10 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export function serveStatic(app: Express) {
-  // After build:
-  //   dist/server/index.js  ← server bundle
-  //   dist/public/          ← Vite frontend build
-  // So from __dirname (dist/server/) we go one level up → dist/public/
+
   const distPath = path.resolve(__dirname, "..", "public");
 
   if (!fs.existsSync(distPath)) {
